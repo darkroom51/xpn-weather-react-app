@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import moment from 'moment'
 
 
 class WeatherMain extends Component {
@@ -45,7 +46,6 @@ class WeatherMain extends Component {
 
 
     render() {
-        console.log(this.state.dataGeoIp)
 
         return (
             <div>
@@ -96,6 +96,11 @@ class WeatherMain extends Component {
                         this.state.dataGeoIp
                         &&
                         this.state.dataGeoIp.city
+                    }
+                </div>
+                <div className="w-datetime">
+                    {
+                        moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
                     }
                 </div>
             </div>
