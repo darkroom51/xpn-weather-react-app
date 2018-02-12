@@ -5,13 +5,15 @@ import '../App.css';
 class WeatherMain extends Component {
     state = {
         dataWeather: null,
-        dataQuote: null
+        dataQuote: null,
+        dataGeoIp: null
     }
 
 
     componentWillMount() {
         this.getWeatherData()
         this.getQuoteData()
+        this.getGeoIpData()
     }
 
     getWeatherData = () => {
@@ -32,8 +34,18 @@ class WeatherMain extends Component {
             .catch((err)=>console.log(err))
     }
 
+    getGeoIpData = () => {
+        fetch(`http://ip-api.com/json`)
+            .then(response => response.json())
+            .then(dataGeoIp => this.setState({
+                dataGeoIp: dataGeoIp
+            }))
+            .catch((err)=>console.log(err))
+    }
+
 
     render() {
+        console.log(this.state.dataGeoIp)
 
         return (
             <div>
@@ -76,6 +88,14 @@ class WeatherMain extends Component {
                         this.state.dataQuote
                         &&
                         this.state.dataQuote[0].title
+                    }
+                </div>
+                <div className="w-geoip">
+                    GeoIp city:
+                    {
+                        this.state.dataGeoIp
+                        &&
+                        this.state.dataGeoIp.city
                     }
                 </div>
             </div>
