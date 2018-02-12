@@ -4,12 +4,14 @@ import '../App.css';
 
 class WeatherMain extends Component {
     state = {
-        dataWeather: null
+        dataWeather: null,
+        dataQuote: null
     }
 
 
     componentWillMount() {
         this.getWeatherData()
+        this.getQuoteData()
     }
 
     getWeatherData = () => {
@@ -17,6 +19,15 @@ class WeatherMain extends Component {
             .then(response => response.json())
             .then(dataWeather => this.setState({
                 dataWeather: dataWeather
+            }))
+            .catch((err)=>console.log(err))
+    }
+
+    getQuoteData = () => {
+        fetch(`http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1`)
+            .then(response => response.json())
+            .then(dataQuote => this.setState({
+                dataQuote: dataQuote
             }))
             .catch((err)=>console.log(err))
     }
@@ -52,6 +63,20 @@ class WeatherMain extends Component {
                         this.state.dataWeather.main.temp
                     }
                     &nbsp;&deg;C
+                </div>
+                <div className="w-quote">
+                    {
+                        this.state.dataQuote
+                        &&
+                        this.state.dataQuote[0].content
+                    }
+
+                    --
+                    {
+                        this.state.dataQuote
+                        &&
+                        this.state.dataQuote[0].title
+                    }
                 </div>
             </div>
         );
