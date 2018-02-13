@@ -12,13 +12,26 @@ class WeatherMain extends Component {
 
 
     componentWillMount() {
-        this.getWeatherData()
-        this.getQuoteData()
         this.getGeoIpData()
+
+        this.getQuoteData()
+    }
+
+    getGeoIpData = () => {
+        fetch(`http://ip-api.com/json`)
+            .then(response => response.json())
+            .then(dataGeoIp => {this.setState({
+                dataGeoIp: dataGeoIp
+            })
+                this.getWeatherData()
+            })
+            .catch((err)=>console.log(err))
     }
 
     getWeatherData = () => {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=Lublin,pl&units=metric&&lang=pl&APPID=0b3d75e5a49f2a267f054a0a60bed6f3`)
+        const city = this.state.dataGeoIp ? this.state.dataGeoIp.city : "Koszalin";
+        const countryCode = this.state.dataGeoIp ? this.state.dataGeoIp.countryCode : "pl";
+        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&&lang=pl&APPID=0b3d75e5a49f2a267f054a0a60bed6f3`)
             .then(response => response.json())
             .then(dataWeather => this.setState({
                 dataWeather: dataWeather
@@ -35,23 +48,21 @@ class WeatherMain extends Component {
             .catch((err)=>console.log(err))
     }
 
-    getGeoIpData = () => {
-        fetch(`http://ip-api.com/json`)
-            .then(response => response.json())
-            .then(dataGeoIp => this.setState({
-                dataGeoIp: dataGeoIp
-            }))
-            .catch((err)=>console.log(err))
-    }
-
 
     render() {
 
         return (
-            <div>
+            <div className={
+                this.state.dataWeather
+                &&
+                this.state.dataWeather.main.temp < -2 ?
+                    "cold"
+                    :
+                    "warm"
+            }>
                 <div className="w-icon">
                     <img
-                        src={`http://openweathermap.org/img/w/${this.state.dataWeather && this.state.dataWeather.weather[0].icon}.png`}
+                        src={`${process.env.PUBLIC_URL}/img/${this.state.dataWeather && this.state.dataWeather.weather[0].icon}.png`}
                         alt={""}
                     />
 
