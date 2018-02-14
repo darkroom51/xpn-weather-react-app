@@ -51,7 +51,6 @@ class WeatherMain extends Component {
 
 
     render() {
-        console.log(this.state.dataWeather)
 
         return (
             <div className={
