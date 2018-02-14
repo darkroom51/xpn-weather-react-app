@@ -32,7 +32,7 @@ class WeatherMain extends Component {
     getWeatherData = () => {
         const city = this.state.dataGeoIp ? this.state.dataGeoIp.city : "Koszalin";
         const countryCode = this.state.dataGeoIp ? this.state.dataGeoIp.countryCode : "pl";
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&&lang=pl&APPID=0b3d75e5a49f2a267f054a0a60bed6f3`)
+        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&&lang=en&APPID=0b3d75e5a49f2a267f054a0a60bed6f3`)
             .then(response => response.json())
             .then(dataWeather => this.setState({
                 dataWeather: dataWeather
@@ -100,14 +100,14 @@ class WeatherMain extends Component {
                     }
                 </div>
                 <div className="w-quote">
-                    <div>
+                    <div className="w-quote-content">
                         {
                             this.state.dataQuote
                             &&
                             this.state.dataQuote[0].content.replace('<p>','').replace('</p>','')
                         }
                     </div>
-                    <div>
+                    <div className="w-quote-title">
                         --&nbsp;
                         {
                             this.state.dataQuote
