@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 import moment from 'moment'
 
@@ -20,12 +20,13 @@ class WeatherMain extends Component {
     getGeoIpData = () => {
         fetch(`http://ip-api.com/json`)
             .then(response => response.json())
-            .then(dataGeoIp => {this.setState({
-                dataGeoIp: dataGeoIp
-            })
+            .then(dataGeoIp => {
+                this.setState({
+                    dataGeoIp: dataGeoIp
+                })
                 this.getWeatherData()
             })
-            .catch((err)=>console.log(err))
+            .catch((err) => console.log(err))
     }
 
     getWeatherData = () => {
@@ -36,7 +37,7 @@ class WeatherMain extends Component {
             .then(dataWeather => this.setState({
                 dataWeather: dataWeather
             }))
-            .catch((err)=>console.log(err))
+            .catch((err) => console.log(err))
     }
 
     getQuoteData = () => {
@@ -45,32 +46,27 @@ class WeatherMain extends Component {
             .then(dataQuote => this.setState({
                 dataQuote: dataQuote
             }))
-            .catch((err)=>console.log(err))
+            .catch((err) => console.log(err))
     }
 
 
     render() {
+        console.log(this.state.dataWeather)
 
         return (
             <div className={
                 this.state.dataWeather
                 &&
                 this.state.dataWeather.main.temp < -2 ?
-                    "cold"
+                    "w-main cold"
                     :
-                    "warm"
+                    "w-main warm"
             }>
                 <div className="w-icon">
                     <img
-                        src={`${process.env.PUBLIC_URL}/img/${this.state.dataWeather && this.state.dataWeather.weather[0].icon}.png`}
+                        src={`${process.env.PUBLIC_URL}/img/${this.state.dataWeather && this.state.dataWeather.weather[0].icon}.svg`}
                         alt={""}
                     />
-
-                    {
-                        this.state.dataWeather
-                        &&
-                        this.state.dataWeather.weather[0].description
-                    }
                 </div>
                 <div className="w-city">
                     {
@@ -79,40 +75,46 @@ class WeatherMain extends Component {
                         this.state.dataWeather.name
                     }
                 </div>
-                <div className="w-temperature">
+                <div className="w-description">
                     {
                         this.state.dataWeather
                         &&
-                        this.state.dataWeather.main.temp
-                    }
-                    &nbsp;&deg;C
-                </div>
-                <div className="w-quote">
-                    {
-                        this.state.dataQuote
-                        &&
-                        this.state.dataQuote[0].content
-                    }
-
-                    --
-                    {
-                        this.state.dataQuote
-                        &&
-                        this.state.dataQuote[0].title
+                        this.state.dataWeather.weather[0].description
                     }
                 </div>
-                <div className="w-geoip">
-                    GeoIp city:
-                    {
-                        this.state.dataGeoIp
-                        &&
-                        this.state.dataGeoIp.city
-                    }
+                <div className="w-temperature">
+                    <div className="w-temperature-num">
+                        {
+                            this.state.dataWeather
+                            &&
+                            Math.round(this.state.dataWeather.main.temp)
+                        }
+                    </div>
+                    <div className="w-temperature-sign">
+                        &deg;C
+                    </div>
                 </div>
                 <div className="w-datetime">
                     {
-                        moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+                        moment().format("dddd, MMMM Do YYYY")
                     }
+                </div>
+                <div className="w-quote">
+                    <div>
+                        {
+                            this.state.dataQuote
+                            &&
+                            this.state.dataQuote[0].content.replace('<p>','').replace('</p>','')
+                        }
+                    </div>
+                    <div>
+                        --&nbsp;
+                        {
+                            this.state.dataQuote
+                            &&
+                            this.state.dataQuote[0].title
+                        }
+                    </div>
                 </div>
             </div>
         );

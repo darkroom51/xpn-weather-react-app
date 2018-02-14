@@ -1,12 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i');
+
+.w-main{
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  color: #fff;
+  min-height: 100vh;
+  /*display:flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: space-evenly;*/
+}
+
 .warm{
-  background-color: orangered;
+  background-color: deepskyblue;
 }
 
 .cold{
-  background-color: cadetblue;
+  background-color: steelblue;
+}
+
+.w-icon{
+
+}
+.w-icon img{
+  max-width:50vw;
+  height: auto;
+}
+
+.w-city{
+  font-size: 1.5em;
+  padding-bottom: 2vh;
+}
+
+.w-description{
+  font-size: 0.8em;
+  padding-bottom: none;
 }
 
 .w-temperature{
-  font-size:3em;
-  text-align: center;
+  padding-bottom: 6vh;
+  padding-top: 6vh;
+  display:flex;
+  justify-content: center;
+}
+.w-temperature .w-temperature-num{
+  font-size:6em;
+  line-height: 0.9em;
+}
+.w-temperature .w-temperature-sign{
+  font-size:2em;
+}
+
+.w-datetime{
+  font-size: 0.8em;
+  padding-bottom: 4vh;
+}
+
+.w-quote{
+  font-size: 1.3em;
+  padding: 0 20%;
+  font-style: italic;
 }
