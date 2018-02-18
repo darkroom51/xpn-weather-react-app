@@ -41,7 +41,9 @@ class WeatherMain extends Component {
     }
 
     getQuoteData = () => {
-        fetch(`http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1`)
+        let proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+        let targetUrl = 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1'
+        fetch(proxyUrl + targetUrl)
             .then(response => response.json())
             .then(dataQuote => this.setState({
                 dataQuote: dataQuote
