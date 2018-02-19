@@ -12,7 +12,8 @@ class WeatherMain extends Component {
 
         panelOpened:false,
         customCity:'',
-        isCustomCityOK: false
+        isCustomCitySet: false,
+        isCityOK: false
     }
 
 
@@ -21,9 +22,6 @@ class WeatherMain extends Component {
         this.getQuoteData()
     }
 
-    // componentWillUpdate() {
-    //
-    // }
 
     getGeoIpData = () => {
         fetch(`http://ip-api.com/json`)
@@ -39,21 +37,31 @@ class WeatherMain extends Component {
 
     getWeatherData = () => {
         let weatherUrl = ''
-        if (this.state.isCustomCityOK){
+        if (this.state.isCityOK && this.state.isCustomCitySet){ //if custom city set
             const city = this.state.customCity;
             weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&&lang=en&APPID=dabd8394d3f47226e331477d5ccf265e`;
-        }else{
-            const lat = this.state.dataGeoIp.lat ? this.state.dataGeoIp.lat : "51.2441"; //lat&long due to ip-api returns non-valid city name
+        }else{ //if no custom city set, get coordinates NOT city name from ip-api
+            const lat = this.state.dataGeoIp.lat ? this.state.dataGeoIp.lat : "51.2441"; //lat&long because ip-api returns non-valid city names
             const lon = this.state.dataGeoIp.lon ? this.state.dataGeoIp.lon : "22.513";
             weatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&&lang=en&APPID=dabd8394d3f47226e331477d5ccf265e`
         }
 
         fetch(weatherUrl)
             .then(response => response.json())
-            .then(dataWeather => this.setState({
-                dataWeather: dataWeather
-            }))
-            .catch((err) => console.log(err))
+            .then(dataWeather => {
+                if(dataWeather.cod === 200) {
+                    this.setState({
+                        dataWeather: dataWeather,
+                        isCityOK: true
+                    })
+                    console.log(dataWeather)
+                }else{
+                    this.setState({
+                        isCityOK: false
+                    })
+                }
+            })
+            .catch((err) => console.log('weather fetch err: ', err))
     }
 
     getQuoteData = () => {
@@ -72,13 +80,15 @@ class WeatherMain extends Component {
     }
 
     onClickAddCityHandler = () => {
-        this.setState({ isCustomCityOK: true })
+        this.setState({ isCustomCitySet: true })
         this.getWeatherData()
+        console.log('add clicked')
     }
 
     onClickRemoveCityHandler = () => {
-        this.setState({ isCustomCityOK: false, panelOpened: false })
+        this.setState({ isCustomCitySet: false, customCity: '', panelOpened: true })
         this.getWeatherData()
+        console.log('remove clicked')
     }
 
     togglePanelHandler = () => {
@@ -88,7 +98,7 @@ class WeatherMain extends Component {
 
     render() {
         //let testQuote = 'I loathe the phrase &#8220;no questions asked.&#8221; Great service is about communication, sincerity, and action &#8211; not blind automation.'
-        console.log(this.state.dataWeather)
+        //console.log(this.state.dataWeather)
 
         return (
             <div className={
