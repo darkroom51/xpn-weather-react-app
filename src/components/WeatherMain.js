@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
-import moment from 'moment'
-import entities from 'html-entities'
+import WeatherInfo from './WeatherInfo';
+import QuoteInfo from './QuoteInfo'
 
 
 class WeatherMain extends Component {
@@ -109,81 +109,21 @@ class WeatherMain extends Component {
 
     render() {
         return (
-
             <div className={
                 this.state.dataWeather
                 &&
                 this.state.dataWeather.main.temp < 0 ?
                     "w-main cold"
                     :
-                    "w-main warm"
-            }>
-                <div
-                    className={this.state.panelOpened?"w-overlay":null}
-                    onClick={this.overlayHandler}
-                >
-                    &nbsp;
-                </div>
-                <div className="w-icon">
-                    <img
-                        src={`${process.env.PUBLIC_URL}/img/${this.state.dataWeather && this.state.dataWeather.weather[0].icon}.svg`}
-                        alt={""}
-                    />
-                </div>
-                <div className="w-city">
-                    {
-                        this.state.dataWeather
-                        &&
-                        this.state.dataWeather.name
-                    }
-                    {
-                        this.state.isCustomCitySet ?
-                            ' *'
-                            :
-                            null
-                    }
-                </div>
-                <div className="w-description">
-                    {
-                        this.state.dataWeather
-                        &&
-                        this.state.dataWeather.weather[0].description
-                    }
-                </div>
-                <div className="w-temperature">
-                    <div className="w-temperature-num">
-                        {
-                            this.state.dataWeather
-                            &&
-                            Math.round(this.state.dataWeather.main.temp)
-                        }
-                    </div>
-                    <div className="w-temperature-sign">
-                        &deg;C
-                    </div>
-                </div>
-                <div className="w-datetime">
-                    {
-                        moment().format("dddd, MMMM Do YYYY")
-                    }
-                </div>
-                <div className="w-quote">
-                    <div className="w-quote-content">
-                        {
-                            this.state.dataQuote
-                            &&
-                            entities.AllHtmlEntities.decode(this.state.dataQuote[0].content.replace('<p>','').replace('</p>',''))
-                        }
-                    </div>
-                    <div className="w-quote-title">
-                        --&nbsp;
-                        {
-                            this.state.dataQuote
-                            &&
-                            this.state.dataQuote[0].title
-                        }
-                    </div>
-                </div>
+                    "w-main warm"}>
+                {
+                    this.state.panelOpened ?
+                        <div className="w-overlay" onClick={this.overlayHandler}>&nbsp;</div>
+                        :
+                        null
+                }
+                <WeatherInfo dataWeather={this.state.dataWeather} isCustomCitySet={this.state.isCustomCitySet}/>
+                <QuoteInfo dataQuote={this.state.dataQuote}/>
                 <div className="w-panel">
                     <div className="w-panel-button">
                         <button onClick={this.togglePanelHandler}>

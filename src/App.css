@@ -39,7 +39,7 @@ body{
 }
 
 .w-icon{
-  padding-top:1vh;
+  padding-top:0;
 }
 .w-icon img{
   max-width:50%;
@@ -99,10 +99,13 @@ body{
   background-color: white;
   color: gray;
   font-weight: bold;
-  padding: 5px 7px 5px 7px;
-  border-radius: 10px 10px 0 0;
+  padding: 8px 10px 8px 10px;
+  border-radius: 4px 4px 0 0;
   cursor: pointer;
   border: none;
+  -webkit-box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.4);
+  box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.4);
 }
 .w-panel .w-panel-button button:focus{
   outline: none;
@@ -112,6 +115,9 @@ body{
   padding:20px 10px 0px 10px;
   background-color: white;
   color: black;
+  -webkit-box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.4);
+  box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.4);
 }
 
 .w-panel-container .info-msg{
