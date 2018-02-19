@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
 import moment from 'moment'
+import entities from 'html-entities'
 
 
 class WeatherMain extends Component {
@@ -53,6 +54,7 @@ class WeatherMain extends Component {
 
 
     render() {
+        //let testQuote = 'I loathe the phrase &#8220;no questions asked.&#8221; Great service is about communication, sincerity, and action &#8211; not blind automation.'
 
         return (
             <div className={
@@ -105,8 +107,9 @@ class WeatherMain extends Component {
                         {
                             this.state.dataQuote
                             &&
-                            this.state.dataQuote[0].content.replace('<p>','').replace('</p>','')
+                            entities.AllHtmlEntities.decode(this.state.dataQuote[0].content.replace('<p>','').replace('</p>',''))
                         }
+                        {/*{entities.AllHtmlEntities.decode(testQuote)}*/}
                     </div>
                     <div className="w-quote-title">
                         --&nbsp;
