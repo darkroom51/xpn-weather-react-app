@@ -126,14 +126,11 @@ class WeatherMain extends Component {
                 <QuoteInfo dataQuote={this.state.dataQuote}/>
                 <div className="w-panel">
                     <div className="w-panel-button">
-                        <button onClick={this.togglePanelHandler}>
-                            Custom City
-                            {
-                                this.state.isCustomCitySet ?
-                                    ' *'
-                                    :
-                                    null
-                            }
+                        <button
+                            onClick={this.togglePanelHandler}
+                            style={this.state.isCustomCitySet ? {color:'#33C3F0'} : null}
+                        >
+                            <span role="img" alt="" aria-label="Custom City">&#127757;</span>
                         </button>
                     </div>
                     {
