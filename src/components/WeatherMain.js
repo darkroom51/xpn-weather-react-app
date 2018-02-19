@@ -46,7 +46,6 @@ class WeatherMain extends Component {
                         isCityOK: true,
                         infoMsg:""
                     })
-                    console.log(dataWeather)
                 }else{
                     this.setState({
                         isCityOK: false,
@@ -88,8 +87,10 @@ class WeatherMain extends Component {
     }
 
     onClickAddCityHandler = () => {
-        this.setState({ isCustomCitySet: true })
-        this.getWeatherDataCustom()
+        if (this.state.customCity) {
+            this.setState({isCustomCitySet: true})
+            this.getWeatherDataCustom()
+        }
     }
 
     onClickRemoveCityHandler = () => {
@@ -101,17 +102,28 @@ class WeatherMain extends Component {
         this.setState({ panelOpened: !this.state.panelOpened })
     }
 
+    overlayHandler = () => {
+        this.setState({ panelOpened: false })
+    }
+
 
     render() {
         return (
+
             <div className={
                 this.state.dataWeather
                 &&
-                this.state.dataWeather.main.temp < -2 ?
+                this.state.dataWeather.main.temp < 0 ?
                     "w-main cold"
                     :
                     "w-main warm"
             }>
+                <div
+                    className={this.state.panelOpened?"w-overlay":null}
+                    onClick={this.overlayHandler}
+                >
+                    &nbsp;
+                </div>
                 <div className="w-icon">
                     <img
                         src={`${process.env.PUBLIC_URL}/img/${this.state.dataWeather && this.state.dataWeather.weather[0].icon}.svg`}
@@ -123,6 +135,12 @@ class WeatherMain extends Component {
                         this.state.dataWeather
                         &&
                         this.state.dataWeather.name
+                    }
+                    {
+                        this.state.isCustomCitySet ?
+                            ' *'
+                            :
+                            null
                     }
                 </div>
                 <div className="w-description">
@@ -168,20 +186,30 @@ class WeatherMain extends Component {
                 </div>
                 <div className="w-panel">
                     <div className="w-panel-button">
-                        <button onClick={this.togglePanelHandler}>Custom City</button>
+                        <button onClick={this.togglePanelHandler}>
+                            Custom City
+                            {
+                                this.state.isCustomCitySet ?
+                                    ' *'
+                                    :
+                                    null
+                            }
+                        </button>
                     </div>
                     {
                         this.state.panelOpened ?
-                            <div className="w-panel-input">
-                                <input
-                                    type="text"
-                                    placeholder="enter city name ..."
-                                    onChange={this.onChangeInputCityHandler}
-                                    value={this.state.customCity}
-                                />
-                                <button onClick={this.onClickAddCityHandler}>+</button>
-                                <button onClick={this.onClickRemoveCityHandler}>-</button>
+                            <div className="w-panel-container">
                                 <div>
+                                    <input
+                                        type="text"
+                                        placeholder="enter city name ..."
+                                        onChange={this.onChangeInputCityHandler}
+                                        value={this.state.customCity}
+                                    />
+                                    <button onClick={this.onClickAddCityHandler}><span>&#10003;</span></button>
+                                    <button onClick={this.onClickRemoveCityHandler}><span>&#10007;</span></button>
+                                </div>
+                                <div className="info-msg">
                                     {this.state.infoMsg}
                                 </div>
                             </div>
@@ -190,6 +218,7 @@ class WeatherMain extends Component {
                     }
                 </div>
             </div>
+
         );
     }
 }

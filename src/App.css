@@ -1,7 +1,20 @@
-/*@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i');*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i');
+
+* {box-sizing: border-box}
 
 body{
   background-color: #dae2e4;
+}
+
+.w-overlay{
+  position: absolute;
+  width: 100%;
+  max-width: 640px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #000;
+  z-index:10;
+  opacity: 0.5;
 }
 
 .w-main{
@@ -15,13 +28,6 @@ body{
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
-  /*display:flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: space-evenly;*/
-}
-
-@media  {
-  
 }
 
 .warm{
@@ -33,7 +39,7 @@ body{
 }
 
 .w-icon{
-
+  padding-top:1vh;
 }
 .w-icon img{
   max-width:50%;
@@ -82,12 +88,94 @@ body{
 
 .w-panel{
   position:absolute;
-  bottom:15px;
+  bottom:0;
   left:0;
   width:100%;
+  z-index: 100;
 }
 
-.w-panel-input{
+.w-panel .w-panel-button button{
+  font-size: 0.8em;
+  background-color: white;
+  color: gray;
+  font-weight: bold;
+  padding: 5px 7px 5px 7px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  border: none;
+}
+.w-panel .w-panel-button button:focus{
+  outline: none;
+}
+
+.w-panel-container{
+  padding:20px 10px 0px 10px;
   background-color: white;
   color: black;
+}
+
+.w-panel-container .info-msg{
+  font-size: 0.9em;
+  color: #1EAEDB;
+  font-weight: bold;
+  padding: 10px 0 10px 0;
+}
+
+.w-panel-container button{
+  margin-left:5px;
+  display: inline-block;
+  height: 38px;
+  padding: 0 15px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.w-panel-container button{
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0;
+}
+.w-panel-container button:hover{
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB;
+}
+
+.w-panel-container input {
+  height: 38px;
+  padding: 6px 10px;
+  /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.w-panel-container input:focus{
+  border: 1px solid #33C3F0;
+  outline: 0;
+}
+
+
+
+@media (max-width: 640px){
+  .w-quote{
+    font-size: 0.8em;
+    padding: 0 20%;
+    font-style: italic;
+  }
 }
