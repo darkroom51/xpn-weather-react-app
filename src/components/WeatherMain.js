@@ -30,9 +30,9 @@ class WeatherMain extends Component {
     }
 
     getWeatherData = () => {
-        const city = this.state.dataGeoIp ? this.state.dataGeoIp.city : "Koszalin";
-        const countryCode = this.state.dataGeoIp ? this.state.dataGeoIp.countryCode : "pl";
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&&lang=en&APPID=0b3d75e5a49f2a267f054a0a60bed6f3`)
+        const city = this.state.dataGeoIp.city ? this.state.dataGeoIp.city : "Koszalin"; //if your IP is banned on ip-api hardcode "Koszalin" :)
+        const countryCode = this.state.dataGeoIp.countryCode ? this.state.dataGeoIp.countryCode : "pl";
+        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&&lang=en&APPID=dabd8394d3f47226e331477d5ccf265e`)
             .then(response => response.json())
             .then(dataWeather => this.setState({
                 dataWeather: dataWeather
