@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i');
+/*@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i');*/
 
 body{
   background-color: #dae2e4;
@@ -78,4 +78,16 @@ body{
 .w-quote .w-quote-title{
   font-size: 0.7em;
   text-align: right;
+}
+
+.w-panel{
+  position:absolute;
+  bottom:15px;
+  left:0;
+  width:100%;
+}
+
+.w-panel-input{
+  background-color: white;
+  color: black;
 }

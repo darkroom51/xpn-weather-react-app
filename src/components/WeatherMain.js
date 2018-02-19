@@ -8,15 +8,22 @@ class WeatherMain extends Component {
     state = {
         dataWeather: null,
         dataQuote: null,
-        dataGeoIp: null
+        dataGeoIp: null,
+
+        panelOpened:false,
+        customCity:'',
+        isCustomCityOK: false
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         this.getGeoIpData()
-
         this.getQuoteData()
     }
+
+    // componentWillUpdate() {
+    //
+    // }
 
     getGeoIpData = () => {
         fetch(`http://ip-api.com/json`)
@@ -31,9 +38,17 @@ class WeatherMain extends Component {
     }
 
     getWeatherData = () => {
-        const city = this.state.dataGeoIp.city ? this.state.dataGeoIp.city : "Koszalin"; //if your IP is banned on ip-api hardcode "Koszalin" :)
-        const countryCode = this.state.dataGeoIp.countryCode ? this.state.dataGeoIp.countryCode : "pl";
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&&lang=en&APPID=dabd8394d3f47226e331477d5ccf265e`)
+        let weatherUrl = ''
+        if (this.state.isCustomCityOK){
+            const city = this.state.customCity;
+            weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&&lang=en&APPID=dabd8394d3f47226e331477d5ccf265e`;
+        }else{
+            const lat = this.state.dataGeoIp.lat ? this.state.dataGeoIp.lat : "51.2441"; //lat&long due to ip-api returns non-valid city name
+            const lon = this.state.dataGeoIp.lon ? this.state.dataGeoIp.lon : "22.513";
+            weatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&&lang=en&APPID=dabd8394d3f47226e331477d5ccf265e`
+        }
+
+        fetch(weatherUrl)
             .then(response => response.json())
             .then(dataWeather => this.setState({
                 dataWeather: dataWeather
@@ -52,9 +67,28 @@ class WeatherMain extends Component {
             .catch((err) => console.log(err))
     }
 
+    onChangeInputCityHandler = (e) => {
+        this.setState({ customCity: e.target.value })
+    }
+
+    onClickAddCityHandler = () => {
+        this.setState({ isCustomCityOK: true })
+        this.getWeatherData()
+    }
+
+    onClickRemoveCityHandler = () => {
+        this.setState({ isCustomCityOK: false, panelOpened: false })
+        this.getWeatherData()
+    }
+
+    togglePanelHandler = () => {
+        this.setState({ panelOpened: !this.state.panelOpened })
+    }
+
 
     render() {
         //let testQuote = 'I loathe the phrase &#8220;no questions asked.&#8221; Great service is about communication, sincerity, and action &#8211; not blind automation.'
+        console.log(this.state.dataWeather)
 
         return (
             <div className={
@@ -73,6 +107,10 @@ class WeatherMain extends Component {
                 </div>
                 <div className="w-city">
                     {
+                        // this.state.dataGeoIp
+                        // &&
+                        // this.state.dataGeoIp.city
+
                         this.state.dataWeather
                         &&
                         this.state.dataWeather.name
@@ -119,6 +157,27 @@ class WeatherMain extends Component {
                             this.state.dataQuote[0].title
                         }
                     </div>
+                </div>
+                <div className="w-panel">
+                    <div className="w-panel-button">
+                        <button onClick={this.togglePanelHandler}>Custom City</button>
+                    </div>
+                    {
+                        this.state.panelOpened ?
+                            <div className="w-panel-input">
+                                <input
+                                    type="text"
+                                    placeholder="enter city name ..."
+                                    onChange={this.onChangeInputCityHandler}
+                                    value={this.state.customCity}
+                                />
+                                <button onClick={this.onClickAddCityHandler}>+</button>
+                                <button onClick={this.onClickRemoveCityHandler}>-</button>
+                                <br />{this.state.customCity}
+                            </div>
+                            :
+                            null
+                    }
                 </div>
             </div>
         );
