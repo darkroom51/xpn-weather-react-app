@@ -130,21 +130,21 @@ class WeatherMain extends Component {
                             onClick={this.togglePanelHandler}
                             style={this.state.isCustomCitySet ? {color:'#33C3F0'} : null}
                         >
-                            <span role="img" alt="" aria-label="Custom City">&#127757;</span>
+                            <i className="fa fa-globe" role="img" alt="" aria-label="Custom City"> </i>
                         </button>
                     </div>
                     {
                         this.state.panelOpened ?
                             <div className="w-panel-container">
-                                <div>
+                                <div className="input-container">
                                     <input
                                         type="text"
                                         placeholder="enter city name ..."
                                         onChange={this.onChangeInputCityHandler}
                                         value={this.state.customCity}
                                     />
-                                    <button onClick={this.onClickAddCityHandler}><span>&#10003;</span></button>
-                                    <button onClick={this.onClickRemoveCityHandler}><span>&#10007;</span></button>
+                                    <button onClick={this.onClickAddCityHandler} id={"add"}><i className="fa fa-check"> </i></button>
+                                    <button onClick={this.onClickRemoveCityHandler} id={"del"}><i className="fa fa-close"> </i></button>
                                 </div>
                                 <div className="info-msg">
                                     {this.state.infoMsg}

@@ -16,12 +16,6 @@ const WeatherInfo = (props) => (
                 &&
                 props.dataWeather.name
             }
-            {/*{*/}
-                {/*props.isCustomCitySet ?*/}
-                    {/*<span role="img" alt="" aria-label="world">&#127757;</span>*/}
-                    {/*:*/}
-                    {/*<span role="img" alt="" aria-label="home">&#128156;</span>*/}
-            {/*}*/}
         </div>
         <div className="w-description">
             {
